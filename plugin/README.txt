@@ -41,3 +41,7 @@ plugin-name (plugin name lower case with hyphens)
 plugin_name (plugin name lower case with underscores)
 Plugin+Name (plugin name upper / lower case with spaces)
 PLUGINNAMESPACE (all uppercase with underscores)
+
+Generate
+- CSS
+- Minified JS
