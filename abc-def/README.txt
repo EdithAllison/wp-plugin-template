@@ -1,4 +1,4 @@
-=== Plugin+Name ===
+===  ===
 Requires at least: 5.0
 Tested up to: 6.0.2
 Stable tag: 1.0.3

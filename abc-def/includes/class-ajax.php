@@ -7,7 +7,7 @@
  * @since      1.0.0
  */
 
-namespace AGAL\PLUGINNAMESPACE;
+namespace AGAL\MNO;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {

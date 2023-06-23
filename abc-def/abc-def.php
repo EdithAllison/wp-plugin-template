@@ -1,30 +1,30 @@
 <?php
 
 /*
-* Plugin Name: Plugin+Name
+* Plugin Name:
 * Plugin URI:
 * Description:
 * Version: 1.0.0
 * Author: Edith Allison
 * Author URI: https://agentur-alllison.com
-* Text Domain: agentur_allison
+* Text Domain: abc-def
 * Domain Path: /languages
 */
 
-namespace AGAL\PLUGINNAMESPACE;
+namespace AGAL\MNO;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'PLUGINNAMESPACE_PLUGIN_PATH' , __DIR__ );
+define( 'MNO_PLUGIN_PATH' , __DIR__ );
 
 // Autoload classes
 spl_autoload_register( function ( $class ) {
 
 	// project-specific namespace prefix
-	$prefix = 'AGAL\\PLUGINNAMESPACE\\';
+	$prefix = 'AGAL\\MNO\\';
 
 	// base directory for the namespace prefix
 	$base_dir = __DIR__ . '/includes/';
@@ -66,11 +66,11 @@ foreach( $dependecies as $name => $plugin ) {
 		$missing[] = $name;
 	}
 }
-define( 'PLUGINNAMESPACE_MISSING' , implode( ', ', $missing ) );
+define( 'MNO_MISSING' , implode( ', ', $missing ) );
 function dependency_warning() {
 	?>
 	<div class="notice notice-error is-dismissible">
-		<p><?php esc_html_e('Please enable ' . PLUGINNAMESPACE_MISSING, 'agentur_allison' ); ?></p>
+		<p><?php esc_html_e('Please enable ' . MNO_MISSING, 'agentur_allison' ); ?></p>
 	</div>
 	<?php
 }

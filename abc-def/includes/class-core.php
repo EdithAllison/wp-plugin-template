@@ -7,7 +7,7 @@
  * @since      1.0.0
  */
 
-namespace AGAL\PLUGINNAMESPACE;
+namespace AGAL\MNO;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ class Core {
 	 *
 	 * @since    1.0.0
 	 */
-	protected $plugin_name;
+	public $plugin_name;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -30,7 +30,7 @@ class Core {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'plugin-name';
+		$this->plugin_name = 'abc-def';
 
 	}
 
@@ -54,7 +54,7 @@ class Core {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __DIR__ ) . 'assets/css/plugin-name.css', '' , filemtime( plugin_dir_path( __DIR__ ) . 'assets/css/plugin-name.css' ), 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab_cd.css', '' , filemtime( plugin_dir_path( __DIR__ ) . 'assets/build/css/ab_cd.css' ), 'all' );
 
 	}
 
@@ -65,14 +65,16 @@ class Core {
 	 */
 	public function enqueue_scripts() {
 
-		$suffix = SCRIPT_DEBUG === true ? '' : '.min';
-
-		wp_register_script( $this->plugin_name, plugin_dir_url( __DIR__ ) . 'assets/js/plugin-name' . $suffix . '.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/js/plugin-name' . $suffix . '.js' ), true );
+		if( SCRIPT_DEBUG === true ) {
+			wp_register_script( $this->plugin_name, plugin_dir_url( __DIR__ ) . 'assets/src/js/ab_cd.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/src/js/ab_cd.js' ), true );
+		} else {
+			wp_register_script( $this->plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/js/ab_cd.min.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/build/js/ab_cd.min.js' ), true );
+		}
 
 		// Create any data in PHP that we may need to use in our JS file
 		$params = array(
-			'ajax_url'     => admin_url( 'admin-ajax.php' ),
-			'plugin_name_nonce'   => wp_create_nonce( 'plugin_name' ),
+			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'ab_cd_nonce' => wp_create_nonce( 'ab_cd' ),
 		);
 
 		// Assign that data to our script as an JS object
@@ -117,10 +119,10 @@ class Core {
 
 		foreach ( $ajax_events as $ajax_event => $nopriv ) {
 
-			add_action( 'wp_ajax_plugin_name_' . $ajax_event, array( __NAMESPACE__ . '\AJAX', $ajax_event ) );
+			add_action( 'wp_ajax_ab_cd_' . $ajax_event, array( __NAMESPACE__ . '\AJAX', $ajax_event ) );
 
 			if ( $nopriv ) {
-				add_action( 'wp_ajax_nopriv_plugin_name_' . $ajax_event, array( __NAMESPACE__ . '\AJAX' , $ajax_event ) );
+				add_action( 'wp_ajax_nopriv_ab_cd_' . $ajax_event, array( __NAMESPACE__ . '\AJAX' , $ajax_event ) );
 
 			}
 		}

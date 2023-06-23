@@ -7,7 +7,8 @@
  * @since      1.0.0
  */
 
-namespace AGAL\PLUGINNAMESPACE;
+namespace AGAL\MNO;
+use AGAL\MNO\Core as Core;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,10 +24,12 @@ class I18N {
 	 */
 	public function load_plugin_textdomain() {
 
+		$core = new Core();
+
 		load_plugin_textdomain(
-			'agentur_allison',
+			$core->plugin_name,
 			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+			dirname( plugin_basename( __DIR__ ) ) . '/languages/'
 		);
 
 	}
