@@ -7,8 +7,8 @@
  * @since      1.0.0
  */
 
-namespace AGAL\MNO;
-use AGAL\MNO\Core as Core;
+namespace AGAL\MMM;
+use AGAL\MMM\Core as Core;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ class I18N {
 		$core = new Core();
 
 		load_plugin_textdomain(
-			$core->plugin_name,
+			$core::$plugin_name,
 			false,
 			dirname( plugin_basename( __DIR__ ) ) . '/languages/'
 		);

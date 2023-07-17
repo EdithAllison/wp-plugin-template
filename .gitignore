@@ -1,3 +1,15 @@
+# Ignore everything in the root directory
+/*
+
+# Except for the following directories
+!/.gitignore
+!/wp-content/
+/wp-content/*
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/x/
+/wp-content/plugins/x/node_modules/*
+
 # OS generated files #
 ######################
 .DS_Store

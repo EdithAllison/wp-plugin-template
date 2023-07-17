@@ -1,30 +1,30 @@
 <?php
 
 /*
-* Plugin Name:
-* Plugin URI:
-* Description:
+* Plugin Name: NNN
+* Plugin URI: https://codeable.io
+* Description: PPP
 * Version: 1.0.0
-* Author: Edith Allison
-* Author URI: https://agentur-alllison.com
+* Author: Edith Allison for Codeable
+* Author URI: https://agentur-allison.com
 * Text Domain: abc-def
 * Domain Path: /languages
 */
 
-namespace AGAL\MNO;
+namespace AGAL\MMM;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MNO_PLUGIN_PATH' , __DIR__ );
+define( 'MMM_PLUGIN_PATH' , __DIR__ );
 
 // Autoload classes
 spl_autoload_register( function ( $class ) {
 
 	// project-specific namespace prefix
-	$prefix = 'AGAL\\MNO\\';
+	$prefix = 'AGAL\\MMM\\';
 
 	// base directory for the namespace prefix
 	$base_dir = __DIR__ . '/includes/';
@@ -66,11 +66,11 @@ foreach( $dependecies as $name => $plugin ) {
 		$missing[] = $name;
 	}
 }
-define( 'MNO_MISSING' , implode( ', ', $missing ) );
+define( 'MMM_MISSING' , implode( ', ', $missing ) );
 function dependency_warning() {
 	?>
 	<div class="notice notice-error is-dismissible">
-		<p><?php esc_html_e('Please enable ' . MNO_MISSING, 'agentur_allison' ); ?></p>
+		<p><?php esc_html_e('Please enable ' . MMM_MISSING, 'agentur_allison' ); ?></p>
 	</div>
 	<?php
 }

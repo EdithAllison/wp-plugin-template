@@ -7,7 +7,7 @@
  * @since      1.0.0
  */
 
-namespace AGAL\MNO;
+namespace AGAL\MMM;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
