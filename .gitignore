@@ -3,12 +3,14 @@
 
 # Except for the following directories
 !/.gitignore
+!/abc-def/
+
 !/wp-content/
 /wp-content/*
 !/wp-content/plugins/
 /wp-content/plugins/*
-!/wp-content/plugins/x/
-/wp-content/plugins/x/node_modules/*
+!/wp-content/plugins/abc-def/
+/wp-content/plugins/abc-def/node_modules/*
 
 # OS generated files #
 ######################
