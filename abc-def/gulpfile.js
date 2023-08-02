@@ -1,12 +1,13 @@
 // Dependencies
-var gulp = require('gulp');
-var sass = require('gulp-sass')(require('sass'));
-var terser = require('gulp-terser');
-var replace = require('gulp-replace');
-var rename = require('gulp-rename');
-var readlineSync = require('readline-sync');
-var del = require('del');
-var glob = require('glob');
+var gulp     = require('gulp'),
+sass         = require('gulp-sass')(require('sass')),
+terser       = require('gulp-terser'),
+plumber      = require('glup-plumber'),
+replace      = require('gulp-replace'),
+rename       = require('gulp-rename'),
+readlineSync = require('readline-sync'),
+del          = require('del'),
+glob         = require('glob');
 
 gulp.task('sass', function(cb) {
 	gulp
