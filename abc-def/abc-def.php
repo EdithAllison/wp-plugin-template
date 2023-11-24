@@ -70,17 +70,18 @@ define( 'MMM_MISSING' , implode( ', ', $missing ) );
 function dependency_warning() {
 	?>
 	<div class="notice notice-error is-dismissible">
-		<p><?php esc_html_e('Please enable ' . MMM_MISSING, 'agentur_allison' ); ?></p>
+		<p><?php esc_html( printf( /* translators: %1$s Missing Plugins */ __('Please enable %s', 'abc-def' ), MMM_MISSING ) ); ?></p>
 	</div>
 	<?php
 }
 if( !empty( $missing ) ) {
-	add_action( 'admin_notices', 'dependency_warning' );
+	add_action( 'admin_notices',  __NAMESPACE__ . '\\dependency_warning' );
+	deactivate_plugins( 'abc-def/abc-def.php' );
 	return;
 }
 
 // Initiate the plugin
-add_action( 'plugins_loaded',  __NAMESPACE__ . '\\init' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\init' );
 function init() {
 	$plugin = new Core();
 	$plugin->run();

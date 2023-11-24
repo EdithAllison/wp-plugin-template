@@ -52,7 +52,7 @@ class Core {
 	private function set_locale() {
 
 		$i18n = new I18N();
-		add_action( 'plugins_loaded', array( $i18n, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $i18n, 'load_plugin_textdomain' ) );
 
 	}
 

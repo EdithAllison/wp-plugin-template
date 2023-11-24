@@ -1,19 +1,20 @@
 {
-  "name": "abc-def",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
+	"name": "abc-def",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
 		"setup": "gulp setup",
-    "start": "gulp",
-    "build": "gulp production --production true"
-  },
-  "author": "Agentur Allison",
-  "authoruri": "https://agentur-allison.com",
-  "license": "GPL-2.0",
-  "licenseuri": "http://www.gnu.org/licenses/gpl-2.0.txt",
-  "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-sass": "^5.1.0",
+		"start": "gulp",
+		"build": "gulp production --production true",
+		"deploy": "gulp deploy"
+	},
+	"author": "Agentur Allison",
+	"authoruri": "https://agentur-allison.com",
+	"license": "GPL-2.0",
+	"licenseuri": "http://www.gnu.org/licenses/gpl-2.0.txt",
+	"devDependencies": {
+		"gulp": "^4.0.2",
+		"gulp-sass": "^5.1.0",
 		"merge-stream": "^2.0.0",
 		"gulp-rename": "^2.0.0",
 		"node-sass": "^9.0.0",
@@ -22,6 +23,7 @@
 		"gulp-plumber": "^1.2.1",
 		"readline-sync": "^1.4.10",
 		"del": "^6.1.1",
-		"glob": "^10.3.3"
-  }
+		"glob": "^10.3.3",
+		"vinyl-ftp": "^0.6.1"
+	}
 }

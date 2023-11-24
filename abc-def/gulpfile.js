@@ -1,13 +1,14 @@
 // Dependencies
-var gulp     = require('gulp'),
-sass         = require('gulp-sass')(require('sass')),
-terser       = require('gulp-terser'),
-plumber      = require('glup-plumber'),
-replace      = require('gulp-replace'),
-rename       = require('gulp-rename'),
-readlineSync = require('readline-sync'),
-del          = require('del'),
-glob         = require('glob');
+var gulp       = require('gulp'),
+	sass         = require('gulp-sass')(require('sass')),
+	terser       = require('gulp-terser'),
+	plumber      = require('gulp-plumber'),
+	replace      = require('gulp-replace'),
+	rename       = require('gulp-rename'),
+	readlineSync = require('readline-sync'),
+	del          = require('del'),
+	glob         = require('glob'),
+	ftp          = require('vinyl-fpt');
 
 gulp.task('sass', function(cb) {
 	gulp
@@ -37,6 +38,31 @@ gulp.task(
 );
 
 /**
+ * FTP
+ */
+gulp.task('deploy', function () {
+	var conn = ftp.create({
+		host:     'host',
+		user:     'user',
+		password: 'pw',
+		parallel: 10
+	});
+
+	var globs = [
+		'**/*',
+		'!node_modules/**/*'
+	];
+
+	return gulp.src(globs, { base: '.', buffer: false })
+		.pipe(conn.newer('/wp-content/plugins/mailpoet-varehusetnorge')) // only upload newer files
+		.pipe(conn.dest('/wp-content/plugins/mailpoet-varehusetnorge'))
+		.on('end', function() { console.log('Files uploaded successfully!'); })
+		.on('data', function(file) { console.log('Uploaded: ' + file.relative); });
+});
+
+
+
+/**
  * Setup plugin
  * replace strings
  * rename files
@@ -47,7 +73,7 @@ gulp.task('setup', function ( done ) {
 
 	var A = readlineSync.question('Please enter the plugin folder string: ');
 	var B = readlineSync.question('Please enter the short plugin string: ');
-	var C = readlineSync.question('Please enter the plugin namespace: ');
+	var C = readlineSync.question('Please enter the plugin AGAL \ NAMESPACE: ');
 	var D = readlineSync.question('Please enter the plugin name: ');
 	var E = readlineSync.question('Please enter the plugin description: ');
 
