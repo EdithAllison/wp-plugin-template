@@ -94,24 +94,15 @@ class Core {
 	}
 
 	/**
-	 * Register the hooks
+	 * Register the hooks & filters
 	 *
 	 * @since 1.0.0
 	 */
-	private function hooks() {
+	private function hooks_filters() {
 
 		// enqueue styles and scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'wp_enqueue_scripts', array ( $this, 'enqueue_scripts' ) );
-
-	}
-
-	/**
-	* Register filters
-	*
-	* since 1.0.0
-	*/
-	private function filters() {
 
 	}
 
@@ -147,8 +138,7 @@ class Core {
 	public function run() {
 
 		$this->set_locale();
-		$this->hooks();
-		$this->filters();
+		$this->hooks_filters();
 		$this->ajax_actions();
 
 	}

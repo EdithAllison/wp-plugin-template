@@ -8,7 +8,7 @@ var gulp       = require('gulp'),
 	readlineSync = require('readline-sync'),
 	del          = require('del'),
 	glob         = require('glob'),
-	ftp          = require('vinyl-fpt');
+	ftp          = require('vinyl-ftp');
 
 gulp.task('sass', function(cb) {
 	gulp

@@ -29,7 +29,7 @@ class I18N {
 		load_plugin_textdomain(
 			$core::$plugin_name,
 			false,
-			dirname( plugin_basename( __DIR__ ) ) . '/languages/'
+			dirname( plugin_basename( __DIR__ ) ) . 'languages/'
 		);
 
 	}
