@@ -10,13 +10,17 @@ var gulp       = require('gulp'),
 	glob         = require('glob'),
 	ftp          = require('vinyl-ftp');
 
-gulp.task('sass', function(cb) {
-	gulp
+	gulp.task('sass', function(cb) {
+		gulp
 		.src( 'assets/src/css/*.scss' )
 		.pipe(sass())
+		.on('error', function (err) {
+				console.error('Error!', err.message);
+				this.emit('end'); // Prevents Gulp from catching the error and exiting the watch process
+		})
 		.pipe(gulp.dest('assets/build/css'));
-	cb();
-});
+		cb();
+	});
 
 gulp.task('terser', function(cb) {
 	gulp
@@ -54,8 +58,8 @@ gulp.task('deploy', function () {
 	];
 
 	return gulp.src(globs, { base: '.', buffer: false })
-		.pipe(conn.newer('/wp-content/plugins/mailpoet-varehusetnorge')) // only upload newer files
-		.pipe(conn.dest('/wp-content/plugins/mailpoet-varehusetnorge'))
+		.pipe(conn.newer('/wp-content/plugins/x')) // only upload newer files
+		.pipe(conn.dest('/wp-content/plugins/x'))
 		.on('end', function() { console.log('Files uploaded successfully!'); })
 		.on('data', function(file) { console.log('Uploaded: ' + file.relative); });
 });
