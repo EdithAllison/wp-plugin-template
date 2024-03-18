@@ -57,6 +57,14 @@ spl_autoload_register( function ( $class ) {
 });
 
 /**
+ * Activation
+ */
+function activate_ab-cd( $network_wide ) {
+	Activator::activate( $network_wide );
+}
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_ab-cd' );
+
+/**
 * Plugins that must be active
 */
 $dependecies = array(
