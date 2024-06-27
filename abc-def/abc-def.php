@@ -9,6 +9,9 @@
 * Author URI: https://agentur-allison.com
 * Text Domain: abc-def
 * Domain Path: /languages
+*
+* WC requires at least: 8.0.0
+* WC tested up to: 8.6.1
 */
 
 namespace AGAL\MMM;
@@ -54,6 +57,14 @@ spl_autoload_register( function ( $class ) {
 });
 
 /**
+ * Activation
+ */
+function activate_ab-cd( $network_wide ) {
+	Activator::activate( $network_wide );
+}
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_ab-cd' );
+
+/**
 * Plugins that must be active
 */
 $dependecies = array(
@@ -86,3 +97,10 @@ function init() {
 	$plugin = new Core();
 	$plugin->run();
 }
+
+// HPOS compatibility
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
