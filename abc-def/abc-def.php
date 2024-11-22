@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'MMM_PLUGIN_PATH' , __DIR__ );
+define( 'MMM_PLUGIN_URL' , plugin_dir_url( __FILE__ ) );
 
 // Autoload classes
 spl_autoload_register( function ( $class ) {
