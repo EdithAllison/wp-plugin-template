@@ -16,19 +16,14 @@ Watch SASS only
 `npm run watch:sass`
 
 Watch everything (SASS + JS)
-
 `npm run watch`
-
 or
-
 `npm run dev`
 
 Build everything once (no watch)
-
 `npm run build`
 
 Build only SASS
-
 `npm run build:sass`
 
 Build only JS
