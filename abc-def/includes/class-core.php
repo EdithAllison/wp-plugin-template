@@ -17,25 +17,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Core {
 
 	/**
-	 * Full plugin name
-	 * The unique identifier of this plugin.
-	 * Used for translations
-	 * matches the folder string
+	 * Full plugin name.
 	 *
-	 * @since    1.0.0
+	 * The unique identifier of this plugin used for translations.
+	 * Matches the folder string.
+	 *
+	 * @since 1.0.0
+	 * @var   string
 	 */
 	public static $plugin_name;
 
 	/**
-	 * Short plugin name
-	 * Used for JS & CSS
+	 * Short plugin name.
+	 *
+	 * Used for JS and CSS.
+	 *
+	 * @since 1.0.0
+	 * @var   string
 	 */
 	public static $short_plugin_name;
 
 	/**
 	 * Define the core functionality of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 
@@ -47,7 +52,7 @@ class Core {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	private function set_locale() {
 
@@ -58,24 +63,28 @@ class Core {
 
 
 	/**
-	 * Register the stylesheets
+	 * Register the stylesheets.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', '' , filemtime( plugin_dir_path( __DIR__ ) . 'assets/build/css/ab-cd.css' ), 'all' );
+		if ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) || wp_get_environment_type() === 'local' ) {
+			wp_enqueue_style( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), filemtime( \plugin_dir_path( __DIR__ ) . 'assets/build/css/ab-cd.css' ), 'all' );
+		} else {
+			wp_enqueue_style( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), '1.0.0', 'all' );
+		}
 
 	}
 
 	/**
-	 * Register the JavaScript
+	 * Register the JavaScript.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function enqueue_scripts() {
 
-		if( SCRIPT_DEBUG === true || wp_get_environment_type() === 'local' ) {
+		if ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) || wp_get_environment_type() === 'local' ) {
 			wp_register_script( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/src/js/ab-cd.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/src/js/ab-cd.js' ), true );
 		} else {
 			wp_register_script( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/js/ab-cd.min.js', array( 'jquery' ), '1.0.0', true );
@@ -88,13 +97,13 @@ class Core {
 		);
 
 		// Assign that data to our script as an JS object
-		wp_localize_script( self::$short_plugin_name, 'params', $params );
+		wp_localize_script( self::$short_plugin_name, 'ab_cd_params', $params );
 		wp_enqueue_script( self::$short_plugin_name );
 
 	}
 
 	/**
-	 * Register the hooks & filters
+	 * Register the hooks and filters.
 	 *
 	 * @since 1.0.0
 	 */
@@ -102,15 +111,15 @@ class Core {
 
 		// enqueue styles and scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'wp_enqueue_scripts', array ( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 	}
 
 	/**
-	* Register Ajax actions
-	*
-	* @since 1.0.0
-	*/
+	 * Register Ajax actions.
+	 *
+	 * @since 1.0.0
+	 */
 	public function ajax_actions() {
 
 		/* define Ajax events. Set TRUE if "nopriv" is required */
@@ -133,7 +142,7 @@ class Core {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function run() {
 

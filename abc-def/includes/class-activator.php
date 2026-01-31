@@ -16,47 +16,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Activator {
 
-	public static $ab-cd_db_version = '1.0.0';
+	/**
+	 * Database version.
+	 *
+	 * @since 1.0.0
+	 * @var   string
+	 */
+	public static $ab_cd_db_version = '1.0.0';
 
 	/**
-	* ACTIVATE
-	*/
+	 * Activate the plugin.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool $network_wide Whether to activate network-wide.
+	 */
 	public static function activate( $network_wide ) {
 
 		global $wpdb;
 
-			if ( is_multisite() &&  $network_wide ) {
+		if ( is_multisite() && $network_wide ) {
 
-					// Get all blogs in the network and activate plugin on each one
-					$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			// Get all blogs in the network and activate plugin on each one.
+			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
-					foreach ( $blog_ids as $blog_id ) {
+			foreach ( $blog_ids as $blog_id ) {
 
-							switch_to_blog( $blog_id );
+				switch_to_blog( $blog_id );
 
-							self::create_table();
+				self::create_table();
 
-							restore_current_blog();
-					}
+				restore_current_blog();
+			}
 
-			} else {
+		} else {
 
 			self::create_table();
 
-			}
+		}
 
-	} // ENDS ACTIVATE()
+	}
 
 	/**
-	* CREATE DATABASE TABLES
-	*/
+	 * Create database tables.
+	 *
+	 * @since 1.0.0
+	 */
 	private static function create_table() {
 
 		global $wpdb;
 
-		$installed_ver = get_option( "ab-cd_db_version" );
+		$installed_ver = get_option( 'ab-cd_db_version' );
 
-		if ( empty( $installed_ver ) || $installed_ver !== self::$ab-cd_db_version ) {
+		if ( empty( $installed_ver ) || $installed_ver !== self::$ab_cd_db_version ) {
 
 			$table_name = $wpdb->prefix . 'mytable';
 
@@ -78,16 +90,20 @@ class Activator {
 
 			dbDelta( $sql );
 
-			update_option( "ab-cd_db_version", self::$ab-cd_db_version);
+			update_option( 'ab-cd_db_version', self::$ab_cd_db_version );
 
 		}
 
-	}	// END CREATE_TABLE()
+	}
 
 
 	/**
-	* On Multisite when new site is added
-	*/
+	 * On Multisite when new site is added.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param object $params The new blog parameters.
+	 */
 	public static function add_blog( $params ) {
 
 		if ( is_plugin_active_for_network( 'abc-def/abc-def.php' ) ) {

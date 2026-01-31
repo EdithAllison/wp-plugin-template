@@ -14,6 +14,7 @@ const config = {
   replacements: [
     { find: 'abc-def', description: 'Plugin folder string', key: 'folderSlug' },
     { find: 'ab-cd', description: 'Short plugin string', key: 'shortSlug' },
+    { find: 'ab_cd', description: 'Short plugin string (underscores)', key: 'shortSlugUnderscore', deriveFrom: 'shortSlug' },
     { find: 'MMM', description: 'Plugin AGAL/NAMESPACE', key: 'namespace' },
     { find: 'NNN', description: 'Plugin name', key: 'name' },
     { find: 'PPP', description: 'Plugin description', key: 'description' }
@@ -57,7 +58,13 @@ async function setup() {
   
   const answers = {};
   for (const item of config.replacements) {
-    answers[item.find] = await question(`${item.description}: `);
+    if (item.deriveFrom) {
+      // Auto-derive underscore version from hyphenated input
+      const sourceKey = config.replacements.find(r => r.key === item.deriveFrom)?.find;
+      answers[item.find] = answers[sourceKey].replace(/-/g, '_');
+    } else {
+      answers[item.find] = await question(`${item.description}: `);
+    }
   }
   
   console.log('\n📝 Preview:');

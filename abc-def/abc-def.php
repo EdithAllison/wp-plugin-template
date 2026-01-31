@@ -1,18 +1,18 @@
 <?php
 
-/*
-* Plugin Name: NNN
-* Plugin URI: https://codeable.io
-* Description: PPP
-* Version: 1.0.0
-* Author: Edith Allison for Codeable
-* Author URI: https://agentur-allison.com
-* Text Domain: abc-def
-* Domain Path: /languages
-*
-* Requires PHP: 7.4
-* Requires Plugins: woocommerce
-*/
+/**
+ * Plugin Name: NNN
+ * Plugin URI: https://codeable.io
+ * Description: PPP
+ * Version: 1.0.0
+ * Author: Edith Allison for Codeable
+ * Author URI: https://agentur-allison.com
+ * Text Domain: abc-def
+ * Domain Path: /languages
+ *
+ * Requires PHP: 7.4
+ * Requires Plugins: woocommerce
+ */
 
 namespace AGAL\MMM;
 
@@ -21,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MMM_PLUGIN_PATH' , __DIR__ );
-define( 'MMM_PLUGIN_URL' , plugin_dir_url( __FILE__ ) );
+define( 'MMM_PLUGIN_PATH', __DIR__ );
+define( 'MMM_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Autoload classes
 spl_autoload_register( function ( $class ) {
@@ -47,8 +47,8 @@ spl_autoload_register( function ( $class ) {
 	$parts     = explode( '\\', $relative_class );
 	$file      = str_replace( '_', '-', strtolower( array_pop( $parts ) ) );
 	$class     = 'class-' . $file;
-	$folders   = strtolower( implode(DIRECTORY_SEPARATOR, $parts ) );
-	$folders   = !empty( $folders ) ? $folders . DIRECTORY_SEPARATOR : $folders;
+	$folders   = strtolower( implode( DIRECTORY_SEPARATOR, $parts ) );
+	$folders   = ! empty( $folders ) ? $folders . DIRECTORY_SEPARATOR : $folders;
 	$classpath = $base_dir . $folders . $class . '.php';
 
 	if ( file_exists( $classpath ) ) {
@@ -60,34 +60,34 @@ spl_autoload_register( function ( $class ) {
 /**
  * Activation
  */
-function activate_ab-cd( $network_wide ) {
+function activate_ab_cd( $network_wide ) {
 	Activator::activate( $network_wide );
 }
-register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_ab-cd' );
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_ab_cd' );
 
 /**
-* Plugins that must be active
-*/
-$dependecies = array(
+ * Plugins that must be active
+ */
+$dependencies = array(
 	'WooCommerce' => 'woocommerce/woocommerce.php',
 );
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-$missing= array();
-foreach( $dependecies as $name => $plugin ) {
-	if( ! \is_plugin_active( $plugin ) ) {
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
+$missing = array();
+foreach ( $dependencies as $name => $plugin ) {
+	if ( ! \is_plugin_active( $plugin ) ) {
 		$missing[] = $name;
 	}
 }
-define( 'MMM_MISSING' , implode( ', ', $missing ) );
+define( 'MMM_MISSING', implode( ', ', $missing ) );
 function dependency_warning() {
 	?>
 	<div class="notice notice-error is-dismissible">
-		<p><?php esc_html( printf( /* translators: %1$s Missing Plugins */ __('Please enable %s', 'abc-def' ), MMM_MISSING ) ); ?></p>
+		<p><?php /* translators: %s Missing Plugins */ printf( esc_html__( 'Please enable %s', 'abc-def' ), esc_html( MMM_MISSING ) ); ?></p>
 	</div>
 	<?php
 }
-if( !empty( $missing ) ) {
-	add_action( 'admin_notices',  __NAMESPACE__ . '\\dependency_warning' );
+if ( ! empty( $missing ) ) {
+	add_action( 'admin_notices', __NAMESPACE__ . '\\dependency_warning' );
 	deactivate_plugins( 'abc-def/abc-def.php' );
 	return;
 }
