@@ -3,9 +3,8 @@
   "version": "1.0.0",
 "scripts": {
     "setup": "node setup.js",
-    "setup:cleanup": "del-cli setup.js",
+    "setup:cleanup": "rm -f setup.js",
     "setup:complete": "npm run setup && npm run setup:cleanup",
-    
     "sass": "sass assets/src/css:assets/build/css --no-source-map",
     "sass:watch": "sass assets/src/css:assets/build/css --no-source-map --watch",
     "js:minify": "node scripts/minify-js.js",
