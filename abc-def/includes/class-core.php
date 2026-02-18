@@ -23,9 +23,8 @@ class Core {
 	 * Matches the folder string.
 	 *
 	 * @since 1.0.0
-	 * @var   string
 	 */
-	public static $plugin_name;
+	const PLUGIN_NAME = 'abc-def';
 
 	/**
 	 * Short plugin name.
@@ -33,21 +32,8 @@ class Core {
 	 * Used for JS and CSS.
 	 *
 	 * @since 1.0.0
-	 * @var   string
 	 */
-	public static $short_plugin_name;
-
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * @since 1.0.0
-	 */
-	public function __construct() {
-
-		self::$plugin_name = 'abc-def';
-		self::$short_plugin_name = 'ab-cd';
-
-	}
+	const SHORT_PLUGIN_NAME = 'ab-cd';
 
 	/**
 	 * Define the locale for this plugin for internationalization.
@@ -70,9 +56,9 @@ class Core {
 	public function enqueue_styles() {
 
 		if ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) || wp_get_environment_type() === 'local' ) {
-			wp_enqueue_style( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), filemtime( \plugin_dir_path( __DIR__ ) . 'assets/build/css/ab-cd.css' ), 'all' );
+			wp_enqueue_style( self::SHORT_PLUGIN_NAME, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), filemtime( plugin_dir_path( __DIR__ ) . 'assets/build/css/ab-cd.css' ), 'all' );
 		} else {
-			wp_enqueue_style( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), '1.0.0', 'all' );
+			wp_enqueue_style( self::SHORT_PLUGIN_NAME, plugin_dir_url( __DIR__ ) . 'assets/build/css/ab-cd.css', array(), '1.0.0', 'all' );
 		}
 
 	}
@@ -85,9 +71,9 @@ class Core {
 	public function enqueue_scripts() {
 
 		if ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) || wp_get_environment_type() === 'local' ) {
-			wp_register_script( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/src/js/ab-cd.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/src/js/ab-cd.js' ), true );
+			wp_register_script( self::SHORT_PLUGIN_NAME, plugin_dir_url( __DIR__ ) . 'assets/src/js/ab-cd.js', array( 'jquery' ), filemtime( plugin_dir_path( __DIR__ ) . 'assets/src/js/ab-cd.js' ), true );
 		} else {
-			wp_register_script( self::$short_plugin_name, plugin_dir_url( __DIR__ ) . 'assets/build/js/ab-cd.min.js', array( 'jquery' ), '1.0.0', true );
+			wp_register_script( self::SHORT_PLUGIN_NAME, plugin_dir_url( __DIR__ ) . 'assets/build/js/ab-cd.min.js', array( 'jquery' ), '1.0.0', true );
 		}
 
 		// Create any data in PHP that we may need to use in our JS file
@@ -97,8 +83,8 @@ class Core {
 		);
 
 		// Assign that data to our script as an JS object
-		wp_localize_script( self::$short_plugin_name, 'ab_cd_params', $params );
-		wp_enqueue_script( self::$short_plugin_name );
+		wp_localize_script( self::SHORT_PLUGIN_NAME, 'ab_cd_params', $params );
+		wp_enqueue_script( self::SHORT_PLUGIN_NAME );
 
 	}
 
@@ -120,7 +106,7 @@ class Core {
 	 *
 	 * @since 1.0.0
 	 */
-	public function ajax_actions() {
+	private function ajax_actions() {
 
 		/* define Ajax events. Set TRUE if "nopriv" is required */
 		$ajax_events = array(
@@ -149,6 +135,10 @@ class Core {
 		$this->set_locale();
 		$this->hooks_filters();
 		$this->ajax_actions();
+
+		if ( is_multisite() ) {
+			add_action( 'wp_insert_site', array( __NAMESPACE__ . '\Activator', 'add_blog' ) );
+		}
 
 	}
 

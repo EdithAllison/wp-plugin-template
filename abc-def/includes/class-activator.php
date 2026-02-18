@@ -20,9 +20,8 @@ class Activator {
 	 * Database version.
 	 *
 	 * @since 1.0.0
-	 * @var   string
 	 */
-	public static $ab_cd_db_version = '1.0.0';
+	const DB_VERSION = '1.0.0';
 
 	/**
 	 * Activate the plugin.
@@ -44,14 +43,14 @@ class Activator {
 
 				switch_to_blog( $blog_id );
 
-				self::create_table();
+			//	self::create_table();
 
 				restore_current_blog();
 			}
 
 		} else {
 
-			self::create_table();
+			// self::create_table();
 
 		}
 
@@ -68,20 +67,20 @@ class Activator {
 
 		$installed_ver = get_option( 'ab-cd_db_version' );
 
-		if ( empty( $installed_ver ) || $installed_ver !== self::$ab_cd_db_version ) {
+		if ( empty( $installed_ver ) || $installed_ver !== self::DB_VERSION ) {
 
 			$table_name = $wpdb->prefix . 'mytable';
 
 			$charset_collate = $wpdb->get_charset_collate();
 
 			$sql = "CREATE TABLE $table_name (
-				id bigint(20) NOT NULL AUTO_INCREMENT,
+				id bigint NOT NULL AUTO_INCREMENT,
 				number varchar(255) NOT NULL,
-				user bigint(20) NOT NULL,
+				user bigint NOT NULL,
 				text tinytext NOT NULL,
 				textlong longtext,
-				date_modified datetime DEFAULT '0000-00-00 00:00:00',
-				date_created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+				date_modified datetime DEFAULT NULL,
+				date_created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY  (id),
 				KEY user_id (user)
 			) $charset_collate;";
@@ -90,7 +89,7 @@ class Activator {
 
 			dbDelta( $sql );
 
-			update_option( 'ab-cd_db_version', self::$ab_cd_db_version );
+			update_option( 'ab-cd_db_version', self::DB_VERSION );
 
 		}
 
@@ -102,15 +101,15 @@ class Activator {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param object $params The new blog parameters.
+	 * @param \WP_Site $new_site The new site object.
 	 */
-	public static function add_blog( $params ) {
+	public static function add_blog( $new_site ) {
 
 		if ( is_plugin_active_for_network( 'abc-def/abc-def.php' ) ) {
 
-			switch_to_blog( $params->blog_id );
+			switch_to_blog( $new_site->blog_id );
 
-			self::create_table();
+		//	self::create_table();
 
 			restore_current_blog();
 

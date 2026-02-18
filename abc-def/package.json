@@ -1,13 +1,15 @@
 {
   "name": "my-plugin",
   "version": "1.0.0",
+  "description": "Agentur Allison plugin functions",
+  "private": true,
 "scripts": {
     "setup": "node setup.js",
     "setup:cleanup": "rm -f setup.js",
     "setup:complete": "npm run setup && npm run setup:cleanup",
     "sass": "sass assets/src/css:assets/build/css --no-source-map",
     "sass:watch": "sass assets/src/css:assets/build/css --no-source-map --watch",
-    "js:minify": "node scripts/minify-js.js",
+    "js:minify": "for f in assets/src/js/*.js; do terser \"$f\" -o \"assets/build/js/$(basename \"$f\" .js).min.js\" --compress --mangle; done",
     "watch:sass": "npm run sass:watch",
     "watch:js": "chokidar 'assets/src/js/*.js' -c 'npm run js:minify'",
     "watch": "npm-run-all --parallel watch:*",
